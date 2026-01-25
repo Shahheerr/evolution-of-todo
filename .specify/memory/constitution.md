@@ -1,55 +1,40 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- SYNC IMPACT REPORT:
+Version change: N/A → 1.0.0
+Modified principles: None (new constitution)
+Added sections: All sections added
+Removed sections: None
+Templates requiring updates: ✅ Updated
+Follow-up TODOs: None
+-->
+# The Evolution of Todo Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. The Iron Rule of Spec-Driven Development
+All code implementation must originate from Spec-Kit Plus directives processed by Claude Code; Manual code writing is prohibited. If the code fails, we fix the Spec, not the Code.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Specification Management & Versioning
+All specifications must be stored sequentially in the `specs/` directory with strict numbering format (e.g., `specs/001-initial-setup`, `specs/002-basic-crud`, `specs/003-web-refactor`); Once a Spec is implemented and committed, that folder becomes immutable and locked. New features require a new numbered folder - never overwrite old specs.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Git Workflow & Phase-Based Isolation
+Use Phase Branches to prevent regression: `main` holds production-ready code of the completed previous phase, while `phase/I-console`, `phase/II-fullstack`, etc. serve as active development branches; Upon completion of each phase, create a git tag (e.g., `v1.0-phase-I-complete`) before merging.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Directory Evolution & Refactoring Protocol
+Core business logic must be decoupled from interfaces to survive evolution from Phase I to Phase V; During phase transitions, do not delete existing logic - move Phase I code to `/backend/core` and initialize `/frontend` as a sibling during Phase II; Maintain the Great Migration rule to ensure continuity of business logic across all phases.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Tech Stack Compliance
+Each phase has an immutable technology stack: Phase I uses Python 3.13+ with In-Memory storage; Phase II implements Next.js, FastAPI, SQLModel, Neon DB; Phase III integrates OpenAI Agents SDK, MCP; Phases IV/V utilize Docker, Kubernetes, Kafka. Adherence to these stacks is mandatory for each respective phase.
 
-### [PRINCIPLE_6_NAME]
+### VI. Quality Assurance & Self-Correction
+Before marking any task complete, all lints and tests must pass; Generate and maintain a `CLAUDE.md` file to store project-specific context for AI assistant continuity; All changes must be small, testable, and reference code precisely.
 
+## Evolution Protocols
+The project transitions through 5 distinct phases: from a simple In-Memory Python Console App (Phase I) to a Distributed Cloud-Native Microservices System on Kubernetes (Phase V). Each phase builds upon the previous while maintaining backward compatibility where possible. The system must evolve gracefully without breaking existing functionality.
 
-[PRINCIPLE__DESCRIPTION]
-
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
-
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Standards
+All implementation follows Spec-Driven Development methodology with Claude Code as the primary development agent. Specifications drive all code generation, and architectural decisions are documented in Architecture Decision Records (ADRs). Code quality is maintained through automated linting, testing, and peer review processes.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This Constitution serves as the immutable "Supreme Law" governing all project activities; All team members must comply with these principles; Amendments require formal documentation and approval process; All pull requests and reviews must verify constitutional compliance; This document supersedes all other development practices and guidelines.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-01-24 | **Last Amended**: 2026-01-24

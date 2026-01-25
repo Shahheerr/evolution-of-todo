@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.specify/scripts/bash/setup-plan.sh --json)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks)",
+      "Bash(uv add rich)",
+      "Bash(python -c \"\nimport sys\nsys.path.insert\\(0, ''src''\\)\nfrom todo_app.models import Todo\nfrom todo_app.storage import TodoStorage\nfrom todo_app.manager import TodoManager\nfrom todo_app.ui import TodoUI\n\n# Test that all modules can be imported successfully\nprint\\(''✓ All modules imported successfully!''\\)\n\n# Test basic functionality\ntodo = Todo\\(title=''Test Task'', description=''This is a test''\\)\nprint\\(f''✓ Todo created: {todo.title}''\\)\n\n# Test storage\nstorage = TodoStorage\\(\\)\nprint\\(f''✓ Storage initialized''\\)\n\n# Test manager\nmanager = TodoManager\\(storage=storage\\)\nprint\\(f''✓ Manager initialized''\\)\n\n# Test adding a task\ntask = manager.add_task\\(''Sample Task'', ''Sample Description''\\)\nprint\\(f''✓ Task added: {task.title}''\\)\n\n# Test getting all tasks\nall_tasks = manager.get_all_tasks\\(\\)\nprint\\(f''✓ Retrieved {len\\(all_tasks\\)} task\\(s\\)''\\)\n\")",
+      "Bash(uv run python -c \"\nimport sys\nsys.path.insert\\(0, ''src''\\)\nfrom todo_app.models import Todo\nfrom todo_app.storage import TodoStorage\nfrom todo_app.manager import TodoManager\nfrom todo_app.ui import TodoUI\n\n# Test that all modules can be imported successfully\nprint\\(''✓ All modules imported successfully!''\\)\n\n# Test basic functionality\ntodo = Todo\\(title=''Test Task'', description=''This is a test''\\)\nprint\\(f''✓ Todo created: {todo.title}''\\)\n\n# Test storage\nstorage = TodoStorage\\(\\)\nprint\\(f''✓ Storage initialized''\\)\n\n# Test manager\nmanager = TodoManager\\(storage=storage\\)\nprint\\(f''✓ Manager initialized''\\)\n\n# Test adding a task\ntask = manager.add_task\\(''Sample Task'', ''Sample Description''\\)\nprint\\(f''✓ Task added: {task.title}''\\)\n\n# Test getting all tasks\nall_tasks = manager.get_all_tasks\\(\\)\nprint\\(f''✓ Retrieved {len\\(all_tasks\\)} task\\(s\\)''\\)\n\")"
+    ]
+  }
+}
