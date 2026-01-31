@@ -40,22 +40,22 @@ Create an elegant, user-friendly terminal application that transforms the tradit
 ### Acceptance Criteria
 
 #### Functional Acceptance
-- [ ] User can add new tasks with title and description
-- [ ] User can view all tasks in a formatted table with status indicators
-- [ ] User can update existing task details by ID
-- [ ] User can delete individual tasks by ID
-- [ ] User can toggle task completion status
-- [ ] User can view only pending tasks
-- [ ] User can view only completed tasks
-- [ ] User can bulk delete all completed tasks
-- [ ] All tasks persist between application sessions
+- [X] User can add new tasks with title and description
+- [X] User can view all tasks in a formatted table with status indicators
+- [X] User can update existing task details by ID
+- [X] User can delete individual tasks by ID
+- [X] User can toggle task completion status
+- [X] User can view only pending tasks
+- [X] User can view only completed tasks
+- [X] User can bulk delete all completed tasks
+- [X] All tasks persist between application sessions
 
 #### Usability Acceptance
-- [ ] Application presents clear, intuitive menu system
-- [ ] Visual indicators clearly distinguish completed vs pending tasks
-- [ ] Error messages are informative and styled appropriately
-- [ ] Navigation between screens is logical and predictable
-- [ ] Application provides clear feedback for all user actions
+- [X] Application presents clear, intuitive menu system
+- [X] Visual indicators clearly distinguish completed vs pending tasks
+- [X] Error messages are informative and styled appropriately
+- [X] Navigation between screens is logical and predictable
+- [X] Application provides clear feedback for all user actions
 
 ## Functional Requirements
 

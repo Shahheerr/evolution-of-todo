@@ -7,39 +7,38 @@
 
 ## Summary
 
-Implementation of Phase-I: Terminal-Based Todo Application with beautiful Rich UI, following clean architecture principles (Model-Storage-Manager-UI pattern). The application provides comprehensive task management capabilities with persistent JSON storage, supporting all CRUD operations in an aesthetically pleasing terminal interface. Built with Python 3.13+, UV package manager, and Rich library for cross-platform compatibility.
+[Extract from feature spec: primary requirement + technical approach from research]
 
 ## Technical Context
 
-**Language/Version**: Python 3.13+ (as specified in constitution and spec)
-**Primary Dependencies**: Rich library (14.x+), UV package manager, UUID, Datetime (as specified in spec)
-**Storage**: JSON file storage with automatic save/load (as specified in spec)
-**Testing**: pytest for unit and integration tests (standard Python testing framework)
-**Target Platform**: Cross-platform terminal application (Windows, macOS, Linux - as specified in spec)
-**Project Type**: Single terminal application (console-based)
-**Performance Goals**: Application loads within 2 seconds, CRUD operations complete within 1 second, supports 1000+ tasks without degradation (as specified in spec)
-**Constraints**: Single-user local usage only, terminal-based interface, JSON persistence format (as specified in spec)
-**Scale/Scope**: Individual task management, up to 10,000 tasks, single-user environment (as specified in spec)
+<!--
+  ACTION REQUIRED: Replace the content in this section with the technical details
+  for the project. The structure here is presented in advisory capacity to guide
+  the iteration process.
+-->
+
+**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
+**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
+**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
+**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
+**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
+**Project Type**: [single/web/mobile - determines source structure]  
+**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
+**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
+**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-### Compliance Verification
-- ✅ **Spec-Driven Development**: Following spec from `/specs/001-phase-i/spec.md` as required by Constitution Article I
-- ✅ **Specification Management**: Using sequential numbering format `specs/001-phase-i` as required by Constitution Article II
-- ✅ **Git Workflow**: Using feature branch `001-phase-i` for isolation as required by Constitution Article III
-- ✅ **Directory Evolution**: Planning for future migration (Phase I code to `/backend/core` in Phase II) as required by Constitution Article IV
-- ✅ **Tech Stack Compliance**: Using Python 3.13+ with in-memory/JSON storage as specified for Phase I in Constitution Article V
-- ✅ **Quality Assurance**: Following testing and linting practices as required by Constitution Article VI
-- ✅ **Architecture Pattern**: Implementing clean separation (Model-Storage-Manager-UI) as specified in requirements
+[Gates determined based on constitution file]
 
 ## Project Structure
 
 ### Documentation (this feature)
 
 ```text
-specs/001-phase-i/
+specs/[###-feature]/
 ├── plan.md              # This file (/sp.plan command output)
 ├── research.md          # Phase 0 output (/sp.plan command)
 ├── data-model.md        # Phase 1 output (/sp.plan command)
@@ -49,39 +48,51 @@ specs/001-phase-i/
 ```
 
 ### Source Code (repository root)
+<!--
+  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
+  for this feature. Delete unused options and expand the chosen structure with
+  real paths (e.g., apps/admin, packages/something). The delivered plan must
+  not include Option labels.
+-->
 
 ```text
-todo-app/
-├── main.py              # Entry point for the application
-├── pyproject.toml       # UV project configuration with dependencies
-├── README.md            # Project documentation
-├── uv.lock              # UV lock file for dependency management
-├── .python-version      # Python version specification
-├── .gitignore           # Git ignore rules
-└── src/
-    └── todo_app/        # Main Python package
-        ├── __init__.py  # Package initialization
-        ├── models.py    # Todo dataclass model
-        ├── storage.py   # JSON file persistence layer
-        ├── manager.py   # Business logic (CRUD operations)
-        └── ui.py        # Rich terminal interface
-```
+# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
+src/
+├── models/
+├── services/
+├── cli/
+└── lib/
 
-### Tests (repository root)
-
-```text
 tests/
-├── unit/
-│   ├── test_models.py   # Unit tests for Todo model
-│   ├── test_storage.py  # Unit tests for storage functionality
-│   └── test_manager.py  # Unit tests for business logic
+├── contract/
 ├── integration/
-│   └── test_end_to_end.py  # Integration tests for full workflows
-└── contract/
-    └── test_api_contracts.py  # Contract tests for interface behaviors
+└── unit/
+
+# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
+backend/
+├── src/
+│   ├── models/
+│   ├── services/
+│   └── api/
+└── tests/
+
+frontend/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   └── services/
+└── tests/
+
+# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
+api/
+└── [same as backend above]
+
+ios/ or android/
+└── [platform-specific structure: feature modules, UI flows, platform tests]
 ```
 
-**Structure Decision**: Terminal-based Python application following clean architecture pattern with separation of concerns (Model-Storage-Manager-UI). Using src layout for proper packaging, with Rich library for terminal UI, and UV for dependency management as specified in the constitution and feature requirements.
+**Structure Decision**: [Document the selected structure and reference the real
+directories captured above]
 
 ## Complexity Tracking
 

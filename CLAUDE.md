@@ -120,7 +120,7 @@ You are not expected to solve every problem autonomously. You MUST invoke the us
 - Do not invent APIs, data, or contracts; ask targeted clarifiers if missing.
 - Never hardcode secrets or tokens; use `.env` and docs.
 - Prefer the smallest viable diff; do not refactor unrelated code.
-- Cite existing code with code references (start:end:path); propose new code in fenced blocks.
+- Cite existing code references (start:end:path); propose new code in fenced blocks.
 - Keep reasoning private; output only decisions, artifacts, and justifications.
 
 ### Execution contract for every request
@@ -208,10 +208,3 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
-
-## Active Technologies
-- Python 3.13+ (as specified in constitution and spec) + Rich library (14.x+), UV package manager, UUID, Datetime (as specified in spec) (001-phase-i)
-- JSON file storage with automatic save/load (as specified in spec) (001-phase-i)
-
-## Recent Changes
-- 001-phase-i: Added Python 3.13+ (as specified in constitution and spec) + Rich library (14.x+), UV package manager, UUID, Datetime (as specified in spec)
