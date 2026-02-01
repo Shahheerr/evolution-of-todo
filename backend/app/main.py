@@ -15,6 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.database import db
 from app.routes import tasks
+from app.routes import chat
 
 
 # =============================================================================
@@ -129,6 +130,7 @@ async def health_check():
 # =============================================================================
 
 app.include_router(tasks.router, prefix="/api")
+app.include_router(chat.router)  # Chat router already has /api prefix
 
 
 # =============================================================================

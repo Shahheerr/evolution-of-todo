@@ -26,6 +26,10 @@ class Settings(BaseSettings):
     
     # JWT Algorithm (Better Auth uses HS256 by default)
     JWT_ALGORITHM: str = "HS256"
+
+    # AI Configuration (OpenAI)
+    OPENAI_API_KEY: str | None = None
+    AI_MODEL: str = "gpt-4o-mini"
     
     class Config:
         env_file = ".env"

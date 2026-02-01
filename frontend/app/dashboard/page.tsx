@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "@/lib/auth-client";
 import { taskApi, Task, TaskFilters, Priority, Status, CreateTaskInput, UpdateTaskInput } from "@/lib/api";
+import { AIChat } from "@/components/AIChat";
 
 // =============================================================================
 // Task Form Modal Component
@@ -257,6 +258,9 @@ export default function DashboardPage() {
     const [editingTask, setEditingTask] = useState<Task | null>(null);
     const [formLoading, setFormLoading] = useState(false);
 
+    // AI Chat state
+    const [showAIChat, setShowAIChat] = useState(false);
+
     // Redirect if not authenticated
     useEffect(() => {
         if (!isPending && !session) {
@@ -411,13 +415,28 @@ export default function DashboardPage() {
                             {totalTasks} total • {completedCount} completed • {pendingCount} pending • {inProgressCount} in progress
                         </p>
                     </div>
-                    <button
-                        className="btn btn-primary"
-                        onClick={() => { setEditingTask(null); setShowModal(true); }}
-                    >
-                        ➕ New Task
-                    </button>
+                    <div className="flex items-center gap-md">
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() => setShowAIChat(!showAIChat)}
+                        >
+                            🤖 AI Chat
+                        </button>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => { setEditingTask(null); setShowModal(true); }}
+                        >
+                            ➕ New Task
+                        </button>
+                    </div>
                 </div>
+
+                {/* AI Chat Panel */}
+                {showAIChat && (
+                    <div style={{ marginBottom: "1.5rem" }}>
+                        <AIChat onTasksUpdated={fetchTasks} />
+                    </div>
+                )}
 
                 {/* Filters */}
                 <div className="card" style={{ marginBottom: "1.5rem" }}>
