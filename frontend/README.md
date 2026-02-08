@@ -1,24 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TaskFlow Frontend
 
-## Getting Started
+This is the Next.js frontend for the TaskFlow application with Better Auth authentication and a modern dark theme UI.
+
+## Getting Started (Local Development)
 
 First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Container Build (Kubernetes Deployment)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Build the Docker Image
+
+```bash
+docker build -t todo-frontend:local .
+```
+
+### Build Specifications
+
+- **Base Image**: `node:20-alpine` (SHA256-pinned)
+- **Multi-Stage Build**: Builder stage + Runtime stage
+- **Non-Root User**: UID 65532 (nodejs)
+- **Exposed Port**: 3000
+- **Image Size**: Target ≤200MB
+
+### Build Stages
+
+1. **Builder Stage** (`node:20-alpine`)
+   - Installs dependencies with `npm ci`
+   - Generates Prisma client
+   - Builds Next.js application with `npm run build`
+
+2. **Runtime Stage** (`node:20-alpine`)
+   - Copies only built artifacts from builder
+   - Runs as non-root user (UID 65532)
+   - Serves with `npm start`
+
+### Security Features
+
+- Non-root user execution (UID 65532)
+- Specific version tags (no `latest`)
+- Minimal Alpine base image
+- Health check on port 3000
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `NODE_ENV` | Node environment | `production` |
+| `PORT` | Application port | `3000` |
+| `NEXT_PUBLIC_API_URL` | Backend API URL | (from build args) |
+| `NEXT_PUBLIC_APP_URL` | Frontend URL | (from build args) |
+| `DATABASE_URL` | Prisma database | (from Kubernetes Secret) |
+| `BETTER_AUTH_SECRET` | JWT signing secret | (from Kubernetes Secret) |
+
+### Health Check
+
+The container includes a Docker health check:
+```bash
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:3000/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+```
+
+### Scan for Vulnerabilities
+
+```bash
+trivy image todo-frontend:local --severity CRITICAL,HIGH
+```
+
+## Deploy on Kubernetes
+
+### Using Helm
+
+```bash
+helm install todo-local ../charts/todo-app \
+  --namespace todo-app \
+  --set image.frontend.tag=local
+```
+
+### Manual Deployment
+
+```bash
+# Load image into Minikube
+minikube image load todo-frontend:local
+
+# Create deployment
+kubectl apply -f - <<EOF
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: todo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: todo-frontend:local
+        ports:
+        - containerPort: 3000
+EOF
+```
 
 ## Learn More
 
@@ -27,10 +120,7 @@ To learn more about Next.js, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment Documentation
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Kubernetes Deployment Quickstart](../specs/004-local-k8s-deployment/quickstart.md)
+- [Helm Chart Documentation](../charts/todo-app/README.md)

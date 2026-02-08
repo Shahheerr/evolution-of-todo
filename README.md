@@ -1,6 +1,6 @@
 # 🚀 TaskFlow - Production-Grade Todo Application
 
-A full-stack todo application with Next.js frontend, FastAPI backend, and JWT-based authentication using Better Auth.
+A full-stack todo application with Next.js frontend, FastAPI backend, and JWT-based authentication using Better Auth. Now with local Kubernetes deployment support.
 
 ## 📋 Features
 
@@ -271,6 +271,73 @@ Open http://localhost:3000 and verify:
 1. Create `app/[page-name]/page.tsx`
 2. Use `useSession()` to check auth
 3. Use `taskApi` to call backend
+
+## 🐳 Kubernetes Deployment (Phase IV)
+
+TaskFlow now supports local Kubernetes deployment using Minikube and Helm charts with AI-Native Operations (AIOps).
+
+### Prerequisites for Kubernetes Deployment
+
+- **Docker Desktop** - Latest version
+- **Minikube** v1.28+ - Local Kubernetes cluster
+- **kubectl** v1.28+ - Kubernetes command-line tool
+- **Helm** v3.0+ - Kubernetes package manager
+- **Trivy** (optional) - Container security scanner
+
+### Quick Deploy to Minikube
+
+```bash
+# 1. Start Minikube
+minikube start
+
+# 2. Build container images
+./scripts/build-images.sh
+
+# 3. Create namespace
+kubectl create namespace todo-app
+
+# 4. Install Helm chart
+helm install todo-local ./charts/todo-app \
+  --namespace todo-app \
+  --values charts/todo-app/values-dev.yaml
+
+# 5. Access the application
+minikube service todo-local-frontend -n todo-app
+```
+
+### Container Images
+
+**Frontend Image:**
+```bash
+cd frontend
+docker build -t todo-frontend:local .
+```
+
+**Backend Image:**
+```bash
+cd backend
+docker build -t todo-backend:local .
+```
+
+### AIOps Features
+
+- **kubectl-ai**: Natural language queries to your Kubernetes cluster
+- **Kagent**: Autonomous troubleshooting via MCP (Model Context Protocol)
+
+Example queries:
+```bash
+# Why is the backend pod crashing?
+kubectl-ai "Why is the backend pod crashing?"
+
+# Show pods with high memory usage
+kubectl-ai "Show me pods with high memory usage"
+```
+
+### See Also
+
+- [Helm Chart Documentation](charts/todo-app/README.md)
+- [Kubernetes Deployment Spec](specs/004-local-k8s-deployment/spec.md)
+- [Deployment Quickstart](specs/004-local-k8s-deployment/quickstart.md)
 
 ## 📦 Dependencies
 

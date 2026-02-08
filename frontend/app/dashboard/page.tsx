@@ -12,7 +12,7 @@ import { AIChat } from "@/components/AIChat";
 
 interface TaskFormProps {
     task?: Task | null;
-    onSubmit: (data: CreateTaskInput | UpdateTaskInput) => Promise<void>;
+    onSubmit: (data: CreateTaskInput) => Promise<void> | ((data: UpdateTaskInput) => Promise<void>);
     onClose: () => void;
     loading: boolean;
 }

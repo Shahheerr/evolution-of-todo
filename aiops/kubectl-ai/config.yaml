@@ -1,0 +1,93 @@
+# kubectl-ai Configuration for TaskFlow
+# This configuration enables natural language queries to your Kubernetes cluster
+
+# Model configuration
+model: gpt-4
+temperature: 0.3
+max_tokens: 500
+
+# Context settings
+context: minikube
+namespace: todo-app
+
+# Enabled commands (whitelist for safety)
+enabledCommands:
+  - get
+  - describe
+  - logs
+  - exec
+  - top
+
+# Resource types the AI can query
+resourceTypes:
+  - pods
+  - deployments
+  - services
+  - configmaps
+  - secrets
+  - ingress
+  - events
+
+# Query patterns and responses
+patterns:
+  # Pod status queries
+  - pattern: ".*pods.*status"
+    response: "kubectl get pods -n {namespace}"
+    description: "Show all pods in namespace"
+
+  - pattern: ".*crash.*loop.*"
+    response: "kubectl get pods -n {namespace} --field-selector=status.phase!=Running"
+    description: "Show non-running pods"
+
+  - pattern: ".*why.*crashing.*"
+    response: |
+      kubectl get pods -n {namespace} -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.phase}{"\n"}{end}'
+      kubectl logs -n {namespace} <pod-name> --previous
+    description: "Show pod status and previous logs for crashed pods"
+
+  # Logs queries
+  - pattern: ".*logs.*"
+    response: "kubectl logs -n {namespace} -l app=<app-label> --tail=50"
+    description: "Show recent logs"
+
+  - pattern: ".*backend.*logs.*"
+    response: "kubectl logs -n {namespace} -l app=backend --tail=100 -f"
+    description: "Stream backend logs"
+
+  # Resource queries
+  - pattern: ".*memory.*usage.*"
+    response: "kubectl top pods -n {namespace}"
+    description: "Show memory usage"
+
+  - pattern: ".*cpu.*usage.*"
+    response: "kubectl top pods -n {namespace}"
+    description: "Show CPU usage"
+
+  # Service queries
+  - pattern: ".*service.*status.*"
+    response: "kubectl get svc -n {namespace}"
+    description: "Show all services"
+
+  - pattern: ".*endpoint.*"
+    response: "kubectl get endpoints -n {namespace}"
+    description: "Show service endpoints"
+
+  # Deployment queries
+  - pattern: ".*deployment.*status.*"
+    response: "kubectl get deployments -n {namespace}"
+    description: "Show deployment status"
+
+  - pattern: ".*rollout.*status.*"
+    response: "kubectl rollout status deployment -n {namespace}"
+    description: "Show rollout status"
+
+# Safety limits
+maxResourcesToList: 50
+maxLogLines: 500
+allowDelete: false
+allowModify: false
+
+# MCP Server integration (for Kagent)
+mcp:
+  enabled: true
+  server: http://localhost:8000/mcp
